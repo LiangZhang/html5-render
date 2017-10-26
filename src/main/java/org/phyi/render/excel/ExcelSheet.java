@@ -31,7 +31,7 @@ public class ExcelSheet {
     @Override
     public String toString() {
         StringBuilder strBuffer = new StringBuilder();
-        strBuffer.append("<table>\n");
+        strBuffer.append("<table class=\"table table-bordered table-hover\">\n");
         this.rows.forEach(row -> strBuffer.append(row.toString()));
         strBuffer.append("</table>\n");
         return strBuffer.toString();

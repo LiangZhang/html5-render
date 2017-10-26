@@ -29,7 +29,7 @@ public class ExcelRender implements Html5Render {
         this.workbook = WorkbookFactory.create(Utils.readFile(file));
     }
 
-    public String render(InputStream inputStream) {
+    public Object render(InputStream inputStream) {
         int sheets = workbook.getNumberOfSheets();
         List<ExcelSheet> excelSheets = new ArrayList<>();
         for (int i = 0; i < sheets; ++i) {

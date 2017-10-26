@@ -9,6 +9,6 @@ import java.io.InputStream;
  */
 public interface Html5Render {
 
-	String render(InputStream inputStream);
+	Object render(InputStream inputStream);
 
 }

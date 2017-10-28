@@ -13,7 +13,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.phyi.render.Html5Render;
 import org.phyi.render.util.Utils;
 
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -29,7 +28,7 @@ public class ExcelRender implements Html5Render {
         this.workbook = WorkbookFactory.create(Utils.readFile(file));
     }
 
-    public Object render(InputStream inputStream) {
+    public Object render() {
         int sheets = workbook.getNumberOfSheets();
         List<ExcelSheet> excelSheets = new ArrayList<>();
         for (int i = 0; i < sheets; ++i) {
@@ -37,7 +36,7 @@ public class ExcelRender implements Html5Render {
             excelSheets.add(getExcelSheet(sheet));
         }
 
-        return excelSheets.get(0).toString();
+        return excelSheets;
     }
 
     private ExcelSheet getExcelSheet(Sheet sheet) {

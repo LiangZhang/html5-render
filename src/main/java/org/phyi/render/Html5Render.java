@@ -1,7 +1,5 @@
 package org.phyi.render;
 
-import java.io.InputStream;
-
 /**
  * Html5Render
  *
@@ -9,6 +7,6 @@ import java.io.InputStream;
  */
 public interface Html5Render {
 
-	Object render(InputStream inputStream);
+    Object render();
 
 }

@@ -42,7 +42,8 @@ public class ExcelCell {
     }
 
     public Object getValue() {
-        return value;
+        String val = this.value == null ? "" : this.value.toString();
+        return val.replaceAll("\n", "<br/>");
     }
 
     public void setValue(Object value) {
@@ -160,9 +161,9 @@ public class ExcelCell {
         tdBuffer.append(style());
         tdBuffer.append("\">");
         if (this.strikeout) {
-            tdBuffer.append("<s>").append(this.value).append("</s>");
+            tdBuffer.append("<s>").append(getValue()).append("</s>");
         } else {
-            tdBuffer.append(this.value);
+            tdBuffer.append(getValue());
         }
         tdBuffer.append("</td>");
         return tdBuffer.toString();

@@ -1,5 +1,6 @@
 package org.phyi.render;
 
+import org.junit.Test;
 import org.phyi.render.excel.ExcelRender;
 
 /**
@@ -9,8 +10,9 @@ import org.phyi.render.excel.ExcelRender;
  */
 public class ExcelRenderTest {
 
-    public static void main(String[] args) throws Exception {
-        ExcelRender render = new ExcelRender("C:\\Users\\admin\\Desktop\\workwork\\销售项目\\销售系统-开发计划.xlsx");
+    @Test
+    public void testRender() throws Exception {
+        ExcelRender render = new ExcelRender("C:\\Users\\admin\\Desktop\\excel-sample.xlsx");
         render.render();
     }
 }

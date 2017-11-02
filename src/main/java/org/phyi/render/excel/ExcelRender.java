@@ -80,6 +80,10 @@ public class ExcelRender implements Html5Render {
                 ExcelCell excelCell = new ExcelCell();
                 style(excelCell, cell);
                 excelCell.setValue(Utils.getCellValue(cell));
+                if (cell.getCellComment() != null) {
+                    String comment = cell.getCellComment().getString().toString();
+                    excelCell.setComment(comment);
+                }
                 if (cellRangeAddressMap.containsKey(key)) {
                     CellRangeAddress cra = cellRangeAddressMap.get(key);
                     excelCell.setCols(cra.getLastColumn() - cra.getFirstColumn() + 1);

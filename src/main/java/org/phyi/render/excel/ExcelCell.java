@@ -24,6 +24,7 @@ public class ExcelCell {
     private boolean strikeout;
     private HorizontalAlignment alignment;
     private VerticalAlignment verticalAlignment;
+    private String comment;
 
     public int getCols() {
         return cols;
@@ -114,6 +115,14 @@ public class ExcelCell {
         this.alignment = alignment;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     private CharSequence style() {
         Map<String, String> styleMap = new LinkedHashMap<>();
         if (Utils.isNotBlank(this.background)) {
@@ -156,6 +165,9 @@ public class ExcelCell {
         }
         if (this.cols > 1) {
             tdBuffer.append("colspan=\"").append(this.cols).append("\" ");
+        }
+        if (this.comment != null && !this.comment.isEmpty()) {
+            tdBuffer.append("class=\"comment\" ");
         }
         tdBuffer.append("style=\"");
         tdBuffer.append(style());

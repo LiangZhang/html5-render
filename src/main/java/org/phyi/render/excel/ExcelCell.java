@@ -25,6 +25,7 @@ public class ExcelCell {
     private HorizontalAlignment alignment;
     private VerticalAlignment verticalAlignment;
     private String comment;
+    private String hyperlink;
 
     public int getCols() {
         return cols;
@@ -123,6 +124,14 @@ public class ExcelCell {
         this.comment = comment;
     }
 
+    public String getHyperlink() {
+        return hyperlink;
+    }
+
+    public void setHyperlink(String hyperlink) {
+        this.hyperlink = hyperlink;
+    }
+
     private CharSequence style() {
         Map<String, String> styleMap = new LinkedHashMap<>();
         if (Utils.isNotBlank(this.background)) {
@@ -173,9 +182,17 @@ public class ExcelCell {
         tdBuffer.append(style());
         tdBuffer.append("\">");
         if (this.strikeout) {
-            tdBuffer.append("<s>").append(getValue()).append("</s>");
-        } else {
-            tdBuffer.append(getValue());
+            tdBuffer.append("<s>");
+        }
+        if (Utils.isNotBlank(this.hyperlink)) {
+            tdBuffer.append("<a href=\"").append(this.hyperlink).append("\" target=\"_blank\">");
+        }
+        tdBuffer.append(getValue());
+        if (this.strikeout) {
+            tdBuffer.append("</s>");
+        }
+        if (Utils.isNotBlank(this.hyperlink)) {
+            tdBuffer.append("</a>");
         }
         tdBuffer.append("</td>");
         return tdBuffer.toString();

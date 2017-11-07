@@ -79,6 +79,10 @@ public class ExcelRender implements Html5Render {
                 Cell cell = row.getCell(i);
                 ExcelCell excelCell = new ExcelCell();
                 style(excelCell, cell);
+                Hyperlink hyperlink = cell.getHyperlink();
+                if (hyperlink != null) {
+                    excelCell.setHyperlink(hyperlink.getAddress());
+                }
                 excelCell.setValue(Utils.getCellValue(cell));
                 if (cell.getCellComment() != null) {
                     String comment = cell.getCellComment().getString().toString();

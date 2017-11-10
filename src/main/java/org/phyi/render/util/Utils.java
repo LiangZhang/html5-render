@@ -3,6 +3,9 @@ package org.phyi.render.util;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.phyi.render.excel.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +40,7 @@ public class Utils {
     }
 
     public static Object getCellValue(Cell cell) {
+        //((XSSFRichTextString)cell.getRichStringCellValue()).getLengthOfFormattingRun(2)
         CellType cellType = cell.getCellTypeEnum();
         XSSFCell xCell = (XSSFCell) cell;
         if (cellType == CellType.NUMERIC) {
@@ -47,7 +51,31 @@ public class Utils {
             }
             return value;
         } else if (cellType == CellType.STRING) {
-            return cell.getStringCellValue();
+            XSSFRichTextString rts = (XSSFRichTextString) cell.getRichStringCellValue();
+            if (rts.hasFormatting()) {
+                int formatCount = rts.numFormattingRuns();
+                String value = cell.getStringCellValue();
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < formatCount; i++) {
+                    int len = rts.getLengthOfFormattingRun(i);
+                    int index = rts.getIndexOfFormattingRun(i);
+                    XSSFFont font = rts.getFontAtIndex(index);
+                    Text text = new Text();
+                    text.setValue(value.substring(index, index + len));
+                    text.setFontFamily(font.getFontName());
+                    text.setBold(font.getBold());
+                    text.setFontSize(font.getFontHeightInPoints());
+                    text.setStrikeout(font.getStrikeout());
+                    if (font.getXSSFColor() != null) {
+                        String color = font.getXSSFColor().getARGBHex();
+                        text.setColor("#" + color.substring(2));
+                    }
+                    stringBuilder.append(text.toString());
+                }
+                return stringBuilder.toString();
+            } else {
+                return cell.getStringCellValue();
+            }
         } else if (cellType == CellType.BLANK) {
             return "";
         }

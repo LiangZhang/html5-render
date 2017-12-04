@@ -78,6 +78,10 @@ public class ExcelRender implements Html5Render {
                 String key = String.format("%d-%d", rowNum, i);
                 Cell cell = row.getCell(i);
                 ExcelCell excelCell = new ExcelCell();
+                if (cell == null) {
+                    excelRow.getCells().add(excelCell);
+                    continue;
+                }
                 style(excelCell, cell);
                 Hyperlink hyperlink = cell.getHyperlink();
                 if (hyperlink != null) {
@@ -103,6 +107,9 @@ public class ExcelRender implements Html5Render {
     }
 
     private void style(ExcelCell excelCell, Cell cell) {
+        if (cell == null || cell.getCellStyle() == null) {
+            return;
+        }
         Font font = workbook.getFontAt(cell.getCellStyle().getFontIndex());
         if (font instanceof XSSFFont) {
             String color = ((XSSFFont) font).getXSSFColor().getARGBHex();

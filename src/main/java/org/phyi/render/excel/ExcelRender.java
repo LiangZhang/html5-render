@@ -111,17 +111,22 @@ public class ExcelRender implements Html5Render {
             return;
         }
         Font font = workbook.getFontAt(cell.getCellStyle().getFontIndex());
-        if (font instanceof XSSFFont) {
-            String color = ((XSSFFont) font).getXSSFColor().getARGBHex();
-            excelCell.setColor("#" + color.substring(2));
-        } else {
-            String color = ((HSSFFont) font).getHSSFColor((HSSFWorkbook) workbook).getHexString();
-            excelCell.setColor("#" + color);
+        if (font != null) {
+            if (font instanceof XSSFFont) {
+                XSSFColor color = ((XSSFFont) font).getXSSFColor();
+                if (color != null) {
+                    excelCell.setColor("#" + color.getARGBHex().substring(2));
+                }
+            } else {
+                String color = ((HSSFFont) font).getHSSFColor((HSSFWorkbook) workbook).getHexString();
+                excelCell.setColor("#" + color);
+            }
+            excelCell.setFontFamily(font.getFontName());
+            excelCell.setBold(font.getBold());
+            excelCell.setFontSize(font.getFontHeightInPoints());
+            excelCell.setStrikeout(font.getStrikeout());
         }
-        excelCell.setFontFamily(font.getFontName());
-        excelCell.setBold(font.getBold());
-        excelCell.setFontSize(font.getFontHeightInPoints());
-        excelCell.setStrikeout(font.getStrikeout());
+
         excelCell.setAlignment(cell.getCellStyle().getAlignmentEnum());
         excelCell.setVerticalAlignment(cell.getCellStyle().getVerticalAlignmentEnum());
 

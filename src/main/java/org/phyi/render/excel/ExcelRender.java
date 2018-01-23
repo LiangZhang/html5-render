@@ -69,7 +69,7 @@ public class ExcelRender implements Html5Render {
 
         for (int index = 0, lastRowNum = sheet.getLastRowNum(); index <= lastRowNum; ++index) {
             Row row = sheet.getRow(index);
-            if (((XSSFRow) row).getCTRow().getHidden()) {
+            if (row == null || ((XSSFRow) row).getCTRow().getHidden()) {
                 continue;
             }
             int rowNum = row.getRowNum();
